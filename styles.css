@@ -571,6 +571,13 @@ button {
     color: var(--color-text-tertiary);
     font-size: var(--font-size-xs);
     animation: bounce 2s infinite;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.scroll-indicator.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 .mouse {

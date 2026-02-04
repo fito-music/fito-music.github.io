@@ -18,30 +18,40 @@ function initNavigation() {
     const navToggle = document.getElementById('navToggle');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileLinks = document.querySelectorAll('.mobile-nav-link');
-    
-    // Scroll handler for navbar background
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+
+    // Scroll handler for navbar background and scroll indicator
     let lastScroll = 0;
-    
+
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
-        
+
         // Add/remove scrolled class
         if (currentScroll > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
-        
+
+        // Hide scroll indicator when scrolling
+        if (scrollIndicator) {
+            if (currentScroll > 100) {
+                scrollIndicator.classList.add('hidden');
+            } else {
+                scrollIndicator.classList.remove('hidden');
+            }
+        }
+
         lastScroll = currentScroll;
     }, { passive: true });
-    
+
     // Mobile menu toggle
     navToggle.addEventListener('click', () => {
         navToggle.classList.toggle('active');
         mobileMenu.classList.toggle('active');
         document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
     });
-    
+
     // Close mobile menu on link click
     mobileLinks.forEach(link => {
         link.addEventListener('click', () => {
@@ -50,7 +60,7 @@ function initNavigation() {
             document.body.style.overflow = '';
         });
     });
-    
+
     // Close menu on escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
@@ -66,20 +76,20 @@ function initNavigation() {
    ============================================ */
 function initScrollAnimations() {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
-    
+
     // Check if IntersectionObserver is supported
     if (!('IntersectionObserver' in window)) {
         // Fallback: show all elements immediately
         animatedElements.forEach(el => el.classList.add('visible'));
         return;
     }
-    
+
     const observerOptions = {
         root: null,
         rootMargin: '0px 0px -50px 0px',
         threshold: 0.1
     };
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -92,13 +102,13 @@ function initScrollAnimations() {
                 } else {
                     entry.target.classList.add('visible');
                 }
-                
+
                 // Unobserve after animation
                 observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
-    
+
     animatedElements.forEach(el => observer.observe(el));
 }
 
@@ -107,22 +117,22 @@ function initScrollAnimations() {
    ============================================ */
 function initSmoothScroll() {
     const links = document.querySelectorAll('a[href^="#"]');
-    
+
     links.forEach(link => {
         link.addEventListener('click', (e) => {
             const href = link.getAttribute('href');
-            
+
             // Skip if just "#"
             if (href === '#') return;
-            
+
             const target = document.querySelector(href);
-            
+
             if (target) {
                 e.preventDefault();
-                
+
                 const navHeight = document.getElementById('navbar').offsetHeight;
                 const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
-                
+
                 window.scrollTo({
                     top: targetPosition,
                     behavior: 'smooth'
@@ -137,25 +147,25 @@ function initSmoothScroll() {
    ============================================ */
 function initParallax() {
     const orbs = document.querySelectorAll('.gradient-orb');
-    
+
     // Only enable on desktop
     if (window.innerWidth < 768) return;
-    
+
     let ticking = false;
-    
+
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
                 const scrolled = window.pageYOffset;
-                
+
                 orbs.forEach((orb, index) => {
                     const speed = (index + 1) * 0.05;
                     orb.style.transform = `translateY(${scrolled * speed}px)`;
                 });
-                
+
                 ticking = false;
             });
-            
+
             ticking = true;
         }
     }, { passive: true });
