@@ -31,11 +31,13 @@ function initPreloader() {
 
         preloader.classList.add('loaded');
 
-        // Wait for CSS transition to finish before triggering animations
-        // Matching the CSS transition duration (usually 0.5s or 0.8s)
+        // FAILSAFE: Force remove from flow after transition
+        // CSS transition is 0.6s, we wait 600ms
         setTimeout(() => {
+            preloader.style.display = 'none';
+            preloader.style.visibility = 'hidden'; // Double reinforcement
             triggerHeroAnimations();
-        }, 500);
+        }, 600);
     }
 
     // 1. Immediate check - if the page was cached or loaded instantly
@@ -53,9 +55,10 @@ function initPreloader() {
     // If for some reason the load event never fires (e.g. Safari mobile bug), force hide
     setTimeout(() => {
         if (!isHidden) {
+            console.log('Preloader fallback triggered');
             hidePreloader();
         }
-    }, 3000);
+    }, 2500);
 }
 
 function triggerHeroAnimations() {
