@@ -73,9 +73,8 @@ function initNavigation() {
     const navToggle = document.getElementById('navToggle');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileLinks = document.querySelectorAll('.mobile-nav-link');
-    const scrollIndicator = document.querySelector('.scroll-indicator');
 
-    // Scroll handler for navbar background and scroll indicator
+    // Scroll handler for navbar background
     let lastScroll = 0;
 
     window.addEventListener('scroll', () => {
@@ -86,15 +85,6 @@ function initNavigation() {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
-        }
-
-        // Hide scroll indicator when scrolling
-        if (scrollIndicator) {
-            if (currentScroll > 100) {
-                scrollIndicator.classList.add('hidden');
-            } else {
-                scrollIndicator.classList.remove('hidden');
-            }
         }
 
         lastScroll = currentScroll;
