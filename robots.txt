@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# Explicitly Allow AI Bots for GEO
+# Explicitly Allow AI Bots for GEO (Generative Engine Optimization)
 User-agent: GPTBot
 Allow: /
 
@@ -17,8 +17,14 @@ Allow: /
 User-agent: ClaudeBot
 Allow: /
 
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
 # Sitemap
-Sitemap: https://fito-music.github.io/sitemap.xml
+Sitemap: https://fito.music/sitemap.xml
 
 # Host
-Host: https://fito-music.github.io
+Host: https://fito.music

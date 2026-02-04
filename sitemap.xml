@@ -5,14 +5,14 @@
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     
     <url>
-        <loc>https://fito-music.github.io/</loc>
+        <loc>https://fito.music/</loc>
         <lastmod>2026-02-04</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     
     <url>
-        <loc>https://fito-music.github.io/llms.txt</loc>
+        <loc>https://fito.music/llms.txt</loc>
         <lastmod>2026-02-04</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
