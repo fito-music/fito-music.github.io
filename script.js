@@ -12,17 +12,15 @@ document.addEventListener('DOMContentLoaded', () => {
     initCursorGlow();
     initSpotifyController();
 
-    // Trigger animations immediately since preloader is removed
-    setTimeout(triggerHeroAnimations, 100);
+    // Trigger animations immediately
+    triggerHeroAnimations();
 });
 
 function triggerHeroAnimations() {
     const revealElements = document.querySelectorAll('.reveal-up');
     revealElements.forEach(el => {
-        const delay = el.dataset.delay || 0;
-        setTimeout(() => {
-            el.classList.add('visible');
-        }, parseInt(delay));
+        // Force visibility immediately for hero elements if they are stuck
+        el.classList.add('visible');
     });
 }
 
