@@ -22,23 +22,40 @@ function initPreloader() {
 
     if (!preloader) return;
 
+    // Prevent multiple executions of hide logic
+    let isHidden = false;
+
     function hidePreloader() {
+        if (isHidden) return;
+        isHidden = true;
+
         preloader.classList.add('loaded');
-        triggerHeroAnimations();
+
+        // Wait for CSS transition to finish before triggering animations
+        // Matching the CSS transition duration (usually 0.5s or 0.8s)
+        setTimeout(() => {
+            triggerHeroAnimations();
+        }, 500);
     }
 
-    // Hide preloader after content loads
-    if (document.readyState === 'complete') {
-        // Already loaded
+    // 1. Immediate check - if the page was cached or loaded instantly
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
         setTimeout(hidePreloader, 800);
-    } else {
-        window.addEventListener('load', () => {
-            setTimeout(hidePreloader, 800);
-        });
     }
 
-    // Fallback: force hide after 3 seconds max
-    setTimeout(hidePreloader, 3000);
+    // 2. Standard Load Event
+    // We use a slightly longer delay to ensure the browser has painted
+    window.addEventListener('load', () => {
+        setTimeout(hidePreloader, 800);
+    });
+
+    // 3. Safety Fallback
+    // If for some reason the load event never fires (e.g. Safari mobile bug), force hide
+    setTimeout(() => {
+        if (!isHidden) {
+            hidePreloader();
+        }
+    }, 3000);
 }
 
 function triggerHeroAnimations() {
@@ -288,7 +305,7 @@ function throttle(func, limit) {
 
 /* ============================================
    SPOTIFY EMBED CONTROLLER
-   Stop other players when one is clicked
+   Detects interactions via Window Blur (reliable for iframes)
    ============================================ */
 function initSpotifyController() {
     const spotifyIframes = document.querySelectorAll('iframe[src*="spotify.com"]');
@@ -301,19 +318,35 @@ function initSpotifyController() {
         originalSources.set(iframe, iframe.src);
     });
 
-    // When user clicks on a Spotify embed, stop all others
-    spotifyIframes.forEach((clickedIframe) => {
-        clickedIframe.addEventListener('mousedown', () => {
-            spotifyIframes.forEach(otherIframe => {
-                if (otherIframe !== clickedIframe) {
-                    const originalSrc = originalSources.get(otherIframe);
-                    otherIframe.src = 'about:blank';
-                    setTimeout(() => {
-                        otherIframe.src = originalSrc;
-                    }, 100);
-                }
-            });
-        });
+    // METHOD: Monitor Window Focus/Blur
+    // When the window loses focus, it might be because the user clicked an iframe
+    window.addEventListener('blur', () => {
+        // We use a small timeout to allow the activeElement to update
+        setTimeout(() => {
+            const activeEl = document.activeElement;
+
+            // Checks if the focused element is one of our Spotify iframes
+            if (activeEl && activeEl.tagName === 'IFRAME' && activeEl.src.includes('spotify.com')) {
+                // User interacted with this specific iframe (activeEl)
+
+                // Stop all others
+                spotifyIframes.forEach(otherIframe => {
+                    if (otherIframe !== activeEl) {
+                        const originalSrc = originalSources.get(otherIframe);
+
+                        // Force stop by resetting src
+                        // We only do this if it's not already blank to avoid flickering loops
+                        if (otherIframe.src !== 'about:blank') {
+                            otherIframe.src = 'about:blank';
+                            // Restore it shortly after so it's ready to play again if clicked
+                            setTimeout(() => {
+                                otherIframe.src = originalSrc;
+                            }, 500);
+                        }
+                    }
+                });
+            }
+        }, 10);
     });
 }
 
@@ -324,5 +357,3 @@ console.log('%c🎵 FITO', 'font-size: 48px; font-weight: bold; background: line
 console.log('%cMusic that moves you.', 'font-size: 14px; color: #888;');
 console.log('%cListen on Spotify: https://open.spotify.com/artist/49VK62ooP7k2DFtFg5Q4id', 'font-size: 12px; color: #1DB954;');
 console.log('%cContact: info@fito.music', 'font-size: 12px; color: #8b5cf6;');
-
-
