@@ -20,14 +20,25 @@ document.addEventListener('DOMContentLoaded', () => {
 function initPreloader() {
     const preloader = document.getElementById('preloader');
 
+    if (!preloader) return;
+
+    function hidePreloader() {
+        preloader.classList.add('loaded');
+        triggerHeroAnimations();
+    }
+
     // Hide preloader after content loads
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            preloader.classList.add('loaded');
-            // Trigger hero animations after preloader
-            triggerHeroAnimations();
-        }, 1500); // Match preloader animation duration
-    });
+    if (document.readyState === 'complete') {
+        // Already loaded
+        setTimeout(hidePreloader, 800);
+    } else {
+        window.addEventListener('load', () => {
+            setTimeout(hidePreloader, 800);
+        });
+    }
+
+    // Fallback: force hide after 3 seconds max
+    setTimeout(hidePreloader, 3000);
 }
 
 function triggerHeroAnimations() {
@@ -277,53 +288,32 @@ function throttle(func, limit) {
 
 /* ============================================
    SPOTIFY EMBED CONTROLLER
-   Pause other players when one starts
+   Stop other players when one is clicked
    ============================================ */
 function initSpotifyController() {
     const spotifyIframes = document.querySelectorAll('iframe[src*="spotify.com"]');
 
     if (spotifyIframes.length === 0) return;
 
-    // Listen for messages from Spotify embeds
-    window.addEventListener('message', (event) => {
-        // Verify it's from Spotify
-        if (!event.origin.includes('spotify.com')) return;
-
-        try {
-            const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
-
-            // Check if a player started playing
-            if (data.type === 'playback_update' && data.payload && data.payload.isPaused === false) {
-                // Pause all other Spotify iframes
-                spotifyIframes.forEach(iframe => {
-                    if (iframe.contentWindow !== event.source) {
-                        // Send pause command to other players
-                        iframe.contentWindow.postMessage({ command: 'pause' }, '*');
-                    }
-                });
-            }
-        } catch (e) {
-            // Ignore parsing errors
-        }
+    // Store original sources
+    const originalSources = new Map();
+    spotifyIframes.forEach(iframe => {
+        originalSources.set(iframe, iframe.src);
     });
 
-    // Alternative approach: reload iframes when clicking on another
-    spotifyIframes.forEach((iframe, index) => {
-        const container = iframe.closest('.release-card, .spotify-embed, .featured-content');
-        if (container) {
-            container.addEventListener('click', () => {
-                // When clicking a container, pause other players by briefly reloading them
-                spotifyIframes.forEach((otherIframe, otherIndex) => {
-                    if (index !== otherIndex) {
-                        const src = otherIframe.src;
-                        otherIframe.src = '';
-                        setTimeout(() => {
-                            otherIframe.src = src;
-                        }, 50);
-                    }
-                });
-            }, { once: false, capture: true });
-        }
+    // When user clicks on a Spotify embed, stop all others
+    spotifyIframes.forEach((clickedIframe) => {
+        clickedIframe.addEventListener('mousedown', () => {
+            spotifyIframes.forEach(otherIframe => {
+                if (otherIframe !== clickedIframe) {
+                    const originalSrc = originalSources.get(otherIframe);
+                    otherIframe.src = 'about:blank';
+                    setTimeout(() => {
+                        otherIframe.src = originalSrc;
+                    }, 100);
+                }
+            });
+        });
     });
 }
 
@@ -334,4 +324,5 @@ console.log('%c🎵 FITO', 'font-size: 48px; font-weight: bold; background: line
 console.log('%cMusic that moves you.', 'font-size: 14px; color: #888;');
 console.log('%cListen on Spotify: https://open.spotify.com/artist/49VK62ooP7k2DFtFg5Q4id', 'font-size: 12px; color: #1DB954;');
 console.log('%cContact: info@fito.music', 'font-size: 12px; color: #8b5cf6;');
+
 
