@@ -11,10 +11,42 @@ document.addEventListener('DOMContentLoaded', () => {
     initSmoothScroll();
     initCursorGlow();
     initSpotifyController();
+    loadSpotifyStats();
 
     // Trigger animations immediately
     triggerHeroAnimations();
 });
+
+/* ============================================
+   LOAD SPOTIFY STATS FROM JSON
+   ============================================ */
+async function loadSpotifyStats() {
+    try {
+        const response = await fetch('/data/stats.json');
+        if (!response.ok) return;
+
+        const stats = await response.json();
+
+        // Update DOM elements
+        const listenersEl = document.getElementById('stat-listeners');
+        const releasesEl = document.getElementById('stat-releases');
+        const followersEl = document.getElementById('stat-followers');
+
+        if (listenersEl && stats.monthlyListeners) {
+            listenersEl.textContent = stats.monthlyListeners.toLocaleString();
+        }
+        if (releasesEl && stats.releases) {
+            releasesEl.textContent = stats.releases;
+        }
+        if (followersEl && stats.followers) {
+            followersEl.textContent = stats.followers.toLocaleString();
+        }
+
+        console.log('📊 Stats loaded:', stats);
+    } catch (error) {
+        console.log('Stats not available, using default values');
+    }
+}
 
 function triggerHeroAnimations() {
     const revealElements = document.querySelectorAll('.reveal-up');
