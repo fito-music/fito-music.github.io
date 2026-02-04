@@ -1,11 +1,24 @@
 User-agent: *
 Allow: /
 
+# Explicitly Allow AI Bots for GEO
+User-agent: GPTBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
 # Sitemap
 Sitemap: https://fito-music.github.io/sitemap.xml
-
-# Crawl-delay
-Crawl-delay: 1
 
 # Host
 Host: https://fito-music.github.io
