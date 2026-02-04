@@ -35,7 +35,10 @@ function initPreloader() {
         // CSS transition is 0.6s, we wait 600ms
         setTimeout(() => {
             preloader.style.display = 'none';
-            preloader.style.visibility = 'hidden'; // Double reinforcement
+            preloader.style.visibility = 'hidden';
+            if (preloader.parentNode) {
+                preloader.parentNode.removeChild(preloader); // Nuclear option: Remove from DOM
+            }
             triggerHeroAnimations();
         }, 600);
     }
