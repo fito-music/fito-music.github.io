@@ -3,78 +3,143 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Primary Meta Tags -->
-    <title>Fito | Official Artist Page - Music & Releases</title>
-    <meta name="title" content="Fito | Official Artist Page - Music & Releases">
+    <title>Fito | Official Artist Page - Electronic & Indie Music Producer</title>
+    <meta name="title" content="Fito | Official Artist Page - Electronic & Indie Music Producer">
     <meta name="description"
-        content="Explore Fito's latest releases including 'Lost In Your Light', 'No One Left To Forgive', and 'Windblown'. Stream on Spotify, Apple Music, and more.">
+        content="Discover Fito's atmospheric electronic soundscapes. Stream 'Lost In Your Light', 'No One Left To Forgive', and 'Windblown' on Spotify, Apple Music, and all major platforms. Experience music that moves you.">
     <meta name="keywords"
-        content="Fito, Fito music, Lost In Your Light, Windblown, No One Left To Forgive, indie artist, electronic music">
+        content="Fito, Fito music, Fito artist, Lost In Your Light, Windblown, No One Left To Forgive, electronic music producer, indie artist, atmospheric music, ambient electronic, music producer 2026, new music, fito.music">
     <meta name="author" content="Fito">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://fito-music.github.io/">
+
+    <!-- Theme & App -->
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="msapplication-TileColor" content="#0a0a0a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Fito">
+    <meta name="application-name" content="Fito">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="music.musician">
     <meta property="og:url" content="https://fito-music.github.io/">
     <meta property="og:title" content="Fito | Official Artist Page">
-    <meta property="og:description" content="Explore Fito's latest releases. Stream on Spotify, Apple Music, and more.">
+    <meta property="og:description"
+        content="Discover Fito's atmospheric electronic soundscapes. Stream on Spotify, Apple Music, and all major platforms.">
     <meta property="og:image" content="https://fito-music.github.io/fito-music-logo.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="1200">
+    <meta property="og:image:alt" content="Fito - Music Producer Logo">
     <meta property="og:site_name" content="Fito Music">
+    <meta property="og:locale" content="en_US">
+    <meta property="music:musician" content="https://fito-music.github.io/">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://fito-music.github.io/">
     <meta name="twitter:title" content="Fito | Official Artist Page">
     <meta name="twitter:description"
-        content="Explore Fito's latest releases. Stream on Spotify, Apple Music, and more.">
+        content="Discover Fito's atmospheric electronic soundscapes. Stream on Spotify, Apple Music, and all major platforms.">
     <meta name="twitter:image" content="https://fito-music.github.io/fito-music-logo.png">
+    <meta name="twitter:image:alt" content="Fito - Music Producer Logo">
+    <meta name="twitter:creator" content="@itsjustfito">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="fito-music-logo.png">
-    <link rel="apple-touch-icon" href="fito-music-logo.png">
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="fito-music-logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fito-music-logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="fito-music-logo.png">
+    <link rel="mask-icon" href="fito-music-logo.png" color="#8b5cf6">
 
-    <!-- Google Fonts -->
+    <!-- Preconnect & Preload -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://open.spotify.com">
+    <link rel="dns-prefetch" href="https://open.spotify.com">
+    <link rel="preload" href="fito-music-logo.png" as="image">
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Schema.org Structured Data -->
+    <!-- Schema.org Structured Data - Enhanced -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "MusicGroup",
-        "name": "Fito",
-        "url": "https://fito-music.github.io/",
-        "image": "https://fito-music.github.io/fito-music-logo.png",
-        "genre": ["Electronic", "Indie"],
-        "sameAs": [
-            "https://open.spotify.com/artist/49VK62ooP7k2DFtFg5Q4id",
-            "https://music.apple.com/tr/artist/fito/1778741209",
-            "https://www.youtube.com/channel/UCW8lWdq5NUuZ5CZmzf2chRQ",
-            "https://www.tiktok.com/@itsjustfito"
-        ],
-        "album": [
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://fito-music.github.io/#website",
+                "url": "https://fito-music.github.io/",
+                "name": "Fito - Official Artist Page",
+                "description": "Official website of Fito, electronic and indie music producer",
+                "publisher": {
+                    "@id": "https://fito-music.github.io/#artist"
+                }
+            },
+            {
+                "@type": ["Person", "MusicGroup"],
+                "@id": "https://fito-music.github.io/#artist",
+                "name": "Fito",
+                "alternateName": "itsjustfito",
+                "url": "https://fito-music.github.io/",
+                "image": {
+                    "@type": "ImageObject",
+                    "url": "https://fito-music.github.io/fito-music-logo.png",
+                    "width": 1200,
+                    "height": 1200
+                },
+                "description": "Music producer and artist crafting atmospheric soundscapes that blend electronic elements with emotional depth.",
+                "genre": ["Electronic", "Indie", "Ambient", "Atmospheric"],
+                "email": "info@fito.music",
+                "sameAs": [
+                    "https://open.spotify.com/artist/49VK62ooP7k2DFtFg5Q4id",
+                    "https://music.apple.com/tr/artist/fito/1778741209",
+                    "https://www.youtube.com/channel/UCW8lWdq5NUuZ5CZmzf2chRQ",
+                    "https://www.tiktok.com/@itsjustfito"
+                ]
+            },
             {
                 "@type": "MusicAlbum",
+                "@id": "https://fito-music.github.io/#album-lost-in-your-light",
                 "name": "Lost In Your Light",
-                "datePublished": "2026"
+                "byArtist": {"@id": "https://fito-music.github.io/#artist"},
+                "datePublished": "2026",
+                "url": "https://open.spotify.com/album/7Du2kVctEFCg65HJJVw4cZ",
+                "genre": ["Electronic", "Indie"]
             },
             {
-                "@type": "MusicAlbum",
+                "@type": "MusicRecording",
                 "name": "No One Left To Forgive",
-                "datePublished": "2025"
+                "byArtist": {"@id": "https://fito-music.github.io/#artist"},
+                "datePublished": "2025",
+                "url": "https://open.spotify.com/album/4DQBd7rmYaOhrK7JUk9K6K"
             },
             {
-                "@type": "MusicAlbum",
+                "@type": "MusicRecording",
                 "name": "Windblown",
-                "datePublished": "2025"
+                "byArtist": {"@id": "https://fito-music.github.io/#artist"},
+                "datePublished": "2025",
+                "url": "https://open.spotify.com/album/3qiezIukXF8KdVhCr0kwtF"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://fito-music.github.io/"
+                    }
+                ]
             }
         ]
     }
@@ -82,11 +147,25 @@
 </head>
 
 <body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <img src="fito-music-logo.png" alt="Fito" class="preloader-logo">
+            <div class="preloader-bar">
+                <div class="preloader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cursor Glow Effect -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
     <!-- Ambient Background -->
     <div class="ambient-bg">
         <div class="gradient-orb orb-1"></div>
         <div class="gradient-orb orb-2"></div>
         <div class="gradient-orb orb-3"></div>
+        <div class="noise-overlay"></div>
     </div>
 
     <!-- Navigation -->
@@ -122,12 +201,17 @@
     <!-- Hero Section -->
     <header class="hero" id="hero">
         <div class="hero-content">
-            <div class="hero-logo-wrapper animate-on-scroll">
+            <div class="hero-logo-wrapper reveal-up" data-delay="200">
                 <img src="fito-music-logo.png" alt="Fito" class="hero-logo">
                 <div class="logo-glow"></div>
+                <div class="logo-ring"></div>
             </div>
-            <h1 class="hero-title animate-on-scroll">FITO</h1>
-            <p class="hero-subtitle animate-on-scroll">Music Producer & Artist</p>
+            <h1 class="hero-title reveal-up" data-delay="400">
+                <span class="title-letter">F</span><span class="title-letter">I</span><span
+                    class="title-letter">T</span><span class="title-letter">O</span>
+            </h1>
+            <p class="hero-subtitle reveal-up" data-delay="600">Music Producer & Artist</p>
+            <p class="hero-tagline reveal-up" data-delay="700">Crafting atmospheric soundscapes</p>
             <div class="hero-stats animate-on-scroll">
                 <div class="stat">
                     <span class="stat-number">121</span>
