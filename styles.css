@@ -609,26 +609,7 @@ button {
     margin-bottom: var(--space-10);
 }
 
-.hero-title {
-    font-size: var(--font-size-hero);
-    font-weight: 900;
-    letter-spacing: -0.02em;
-    line-height: 1;
-    margin-bottom: var(--space-4);
-    background: var(--gradient-accent);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
 
-.hero-subtitle {
-    font-size: var(--font-size-xl);
-    color: var(--color-text-secondary);
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: var(--space-10);
-}
 
 .hero-stats {
     display: flex;
@@ -1277,6 +1258,15 @@ button {
 
     .hero-stats {
         gap: var(--space-4);
+    }
+
+    .hero-tagline {
+        margin-bottom: var(--space-8);
+        /* Ensure good spacing on mobile */
+        font-size: var(--font-size-base);
+        /* Slightly smaller on mobile to prevent wrapping issues */
+        padding: 0 var(--space-4);
+        /* Prevent touching edges */
     }
 
     .stat-divider {
