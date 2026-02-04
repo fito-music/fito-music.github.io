@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initRevealAnimations();
     initSmoothScroll();
     initCursorGlow();
+    initSpotifyController();
 });
 
 /* ============================================
@@ -275,9 +276,62 @@ function throttle(func, limit) {
 }
 
 /* ============================================
+   SPOTIFY EMBED CONTROLLER
+   Pause other players when one starts
+   ============================================ */
+function initSpotifyController() {
+    const spotifyIframes = document.querySelectorAll('iframe[src*="spotify.com"]');
+
+    if (spotifyIframes.length === 0) return;
+
+    // Listen for messages from Spotify embeds
+    window.addEventListener('message', (event) => {
+        // Verify it's from Spotify
+        if (!event.origin.includes('spotify.com')) return;
+
+        try {
+            const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+
+            // Check if a player started playing
+            if (data.type === 'playback_update' && data.payload && data.payload.isPaused === false) {
+                // Pause all other Spotify iframes
+                spotifyIframes.forEach(iframe => {
+                    if (iframe.contentWindow !== event.source) {
+                        // Send pause command to other players
+                        iframe.contentWindow.postMessage({ command: 'pause' }, '*');
+                    }
+                });
+            }
+        } catch (e) {
+            // Ignore parsing errors
+        }
+    });
+
+    // Alternative approach: reload iframes when clicking on another
+    spotifyIframes.forEach((iframe, index) => {
+        const container = iframe.closest('.release-card, .spotify-embed, .featured-content');
+        if (container) {
+            container.addEventListener('click', () => {
+                // When clicking a container, pause other players by briefly reloading them
+                spotifyIframes.forEach((otherIframe, otherIndex) => {
+                    if (index !== otherIndex) {
+                        const src = otherIframe.src;
+                        otherIframe.src = '';
+                        setTimeout(() => {
+                            otherIframe.src = src;
+                        }, 50);
+                    }
+                });
+            }, { once: false, capture: true });
+        }
+    });
+}
+
+/* ============================================
    CONSOLE EASTER EGG
    ============================================ */
 console.log('%c🎵 FITO', 'font-size: 48px; font-weight: bold; background: linear-gradient(135deg, #8b5cf6, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;');
 console.log('%cMusic that moves you.', 'font-size: 14px; color: #888;');
 console.log('%cListen on Spotify: https://open.spotify.com/artist/49VK62ooP7k2DFtFg5Q4id', 'font-size: 12px; color: #1DB954;');
 console.log('%cContact: info@fito.music', 'font-size: 12px; color: #8b5cf6;');
+
