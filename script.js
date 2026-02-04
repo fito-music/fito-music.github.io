@@ -5,64 +5,16 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize all components
-    initPreloader();
     initNavigation();
     initScrollAnimations();
     initRevealAnimations();
     initSmoothScroll();
     initCursorGlow();
     initSpotifyController();
+
+    // Trigger animations immediately since preloader is removed
+    setTimeout(triggerHeroAnimations, 100);
 });
-
-/* ============================================
-   PRELOADER
-   ============================================ */
-function initPreloader() {
-    const preloader = document.getElementById('preloader');
-
-    if (!preloader) return;
-
-    // Prevent multiple executions of hide logic
-    let isHidden = false;
-
-    function hidePreloader() {
-        if (isHidden) return;
-        isHidden = true;
-
-        preloader.classList.add('loaded');
-
-        // FAILSAFE: Force remove from flow after transition
-        // CSS transition is 0.6s, we wait 600ms
-        setTimeout(() => {
-            preloader.style.display = 'none';
-            preloader.style.visibility = 'hidden';
-            if (preloader.parentNode) {
-                preloader.parentNode.removeChild(preloader); // Nuclear option: Remove from DOM
-            }
-            triggerHeroAnimations();
-        }, 600);
-    }
-
-    // 1. Immediate check - if the page was cached or loaded instantly
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-        setTimeout(hidePreloader, 800);
-    }
-
-    // 2. Standard Load Event
-    // We use a slightly longer delay to ensure the browser has painted
-    window.addEventListener('load', () => {
-        setTimeout(hidePreloader, 800);
-    });
-
-    // 3. Safety Fallback
-    // If for some reason the load event never fires (e.g. Safari mobile bug), force hide
-    setTimeout(() => {
-        if (!isHidden) {
-            console.log('Preloader fallback triggered');
-            hidePreloader();
-        }
-    }, 2500);
-}
 
 function triggerHeroAnimations() {
     const revealElements = document.querySelectorAll('.reveal-up');
@@ -73,6 +25,8 @@ function triggerHeroAnimations() {
         }, parseInt(delay));
     });
 }
+
+
 
 /* ============================================
    CURSOR GLOW (Desktop only)
